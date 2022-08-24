@@ -1,0 +1,90 @@
+ubuntu@ubuntu-OptiPlex-5000:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.30-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create databasepj;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databasepj' at line 1
+mysql> create database pj;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> create table employee(emp_id int,emp_name varchar(20),working_hrs int,city varchr(10) deafault"pune");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchr(10) deafault"pune")' at line 1
+mysql> create table employee(emp_id int,emp_name varchar(20),working_hrs int,city varchr(10) deafault"pune")
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchr(10) deafault"pune")' at line 1
+mysql> use pj;
+Database changed
+mysql> create table employee(emp_id int,emp_name varchar(20),working_hrs int,city varchr(10) deafault"pune");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchr(10) deafault"pune")' at line 1
+mysql> create table employee(emp_id int,emp_name varchar(20),working_hrs int,city varchar(10) deafault"pune");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'deafault"pune")' at line 1
+mysql> create table employee(emp_id int,emp_name varchar(20),working_hrs int,city varchar(10) default"pune");
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into employee value(101,"sham",30,"nagar");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into employee value(102,"ram",20,"kada");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert emp_id,emp_name,worki9ng_hrs into employee values(102,"sham",15
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',emp_name,worki9ng_hrs into employee values(102,"sham",15' at line 1
+mysql> insert into employee value(101,"sham",20,"pune);
+    "> insert into employee value(101,"sham",20,"pune");
+    "> insert into employee value(101,"sham",20,"pune");
+    "> 
+    "> ;
+    "> ;
+    "> 
+    "> 
+    "> 
+    "> "
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sham",20,"pune");
+insert into employee value(101,"sham",20,"pune");
+
+;
+;
+
+
+
+"' at line 2
+mysql> insert into employee value(103,"sham",40,"pune");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into employee value(105,"sham",50,"pune");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select *from employee;
++--------+----------+-------------+-------+
+| emp_id | emp_name | working_hrs | city  |
++--------+----------+-------------+-------+
+|    101 | sham     |          30 | nagar |
+|    102 | ram      |          20 | kada  |
+|    103 | sham     |          40 | pune  |
+|    105 | sham     |          50 | pune  |
++--------+----------+-------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select emp_name sum(working_hrs) from employee group by emp_name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sum(working_hrs) from employee group by emp_name' at line 1
+mysql> select emp_name ,sum(working_hrs) from employee group by emp_name;
++----------+------------------+
+| emp_name | sum(working_hrs) |
++----------+------------------+
+| sham     |              120 |
+| ram      |               20 |
++----------+------------------+
+2 rows in set (0.03 sec)
+
