@@ -1,0 +1,95 @@
+create table n_rollcall(rno number(5),name varchar2(20),status varchar2(20));
+
+create table o_rollcall(rno number(5),name varchar2(20),status varchar2(20));
+
+insert into o_rollcall values( 1, 'suyog', 'present');
+insert into o_rollcall values( 2, 'yadnesh', 'present');
+insert into o_rollcall values( 3, 'dnyanesh', 'present');
+
+insert into n_rollcall values( 3, 'dnyanesh', 'present');
+insert into n_rollcall values( 4, 'nihar', 'present');
+
+select * from o_rollcall;
+
+       RNO NAME 		STATUS
+---------- -------------------- --------------------
+	 1 suyog		present
+	 2 yadnesh		present
+	 3 dnyanesh		present
+
+select * from n_rollcall;
+
+       RNO NAME 		STATUS
+---------- -------------------- --------------------
+	 3 dnyanesh		present
+	 4 nihar		present
+
+
+MERGE CURSOR:-
+
+begin
+merge into n_rollcall t1 using (select rno,name,status from o_rollcall) t2 on ( t1.rno=t2.rno) when not matched then insert  values(t2.rno,t2.name,t2.status);
+if sql%rowcount>0 then
+dbms_output.put_line(sql%rowcount || ' rows are updated');
+else
+dbms_output.put_line('no rows were updated');
+end if;
+if sql%notfound then
+dbms_output.put_line('not merged');
+end if;
+end;
+/
+
+
+O/P :-
+
+@'/home/ubuntu/temp.sql' 
+2 rows are updated
+
+PL/SQL procedure successfully completed.
+
+select * from o_rollcall;
+
+       RNO NAME 		STATUS
+---------- -------------------- --------------------
+	 1 suyog		present
+	 2 yadnesh		present
+	 3 dnyanesh		present
+
+select * from n_rollcall;
+
+       RNO NAME 		STATUS
+---------- -------------------- --------------------
+	 3 dnyanesh		present
+	 4 nihar		present
+	 1 suyog		present
+	 2 yadnesh		present
+	 
+	 
+IMPLICIT CURSOR :-
+
+begin
+update o_rollcall set status='present' where rno=2;
+if sql%found then
+dbms_output.put_line('Updated');
+elsif sql%notfound then
+dbms_output.put_line('Not found');
+end if;
+if sql%rowcount>0 then
+dbms_output.put_line(sql%rowcount || ' rows are updated');
+else
+dbms_output.put_line('no rows were updated');
+end if;
+end;
+/
+
+O/P :-
+@'/home/ubuntu/temp.sql' 
+Updated
+1 rows are updated
+
+PL/SQL procedure successfully completed.
+
+
+
+
